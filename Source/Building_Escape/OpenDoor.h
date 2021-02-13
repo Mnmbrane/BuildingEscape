@@ -28,6 +28,7 @@ public:
 private:
 
 	void OpenDoor(float DeltaTime);
+	void CloseDoor(float DeltaTime);
 
 	float mInitialYaw;
 	float mCurrentYaw;
