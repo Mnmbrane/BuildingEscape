@@ -33,6 +33,11 @@ private:
 	float mInitialYaw;
 	float mCurrentYaw;
 
+	float mDoorLastOpened = 0.f;
+
+	UPROPERTY(EditAnywhere)
+	float mDoorCloseDelay = .5f;
+
 	UPROPERTY(EditAnywhere)
 	float mTargetYaw = 90.f;
 
@@ -41,4 +46,10 @@ private:
 
 	UPROPERTY(EditAnywhere)
 	AActor* mActorThatOpens;
+
+	UPROPERTY(EditAnywhere)
+	float mOpenDoorInterpSpeed = 60.f;
+
+	UPROPERTY(EditAnywhere)
+	float mCloseDoorInterpSpeed = 60.f;
 };
