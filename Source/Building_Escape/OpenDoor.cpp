@@ -2,7 +2,10 @@
 
 
 #include "OpenDoor.h"
+#include "Engine/World.h"
 #include "GameFramework/Actor.h"
+#include "GameFramework/PlayerController.h"
+
 
 // Sets default values for this component's properties
 UOpenDoor::UOpenDoor()
@@ -24,6 +27,13 @@ void UOpenDoor::BeginPlay()
 	mCurrentYaw = mInitialYaw;
 	
 	mTargetYaw += mInitialYaw;
+
+	if(mPressurePlate == nullptr)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("%s has the open door component but no pressure plate set"), *GetOwner()->GetName())
+	}
+
+	mActorThatOpens = GetWorld()->GetFirstPlayerController()->GetPawn();
 }
 
 
@@ -32,10 +42,14 @@ void UOpenDoor::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompon
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	UE_LOG(LogTemp, Warning, TEXT("Current Rotation: %s"), *GetOwner()->GetActorRotation().ToString());
-	UE_LOG(LogTemp, Warning, TEXT("Yaw is: %f"), GetOwner()->GetActorRotation().Yaw);
-	UE_LOG(LogTemp, Warning, TEXT("Target Yaw: %f"), mTargetYaw);
+	if(mPressurePlate != nullptr && mPressurePlate->IsOverlappingActor(mActorThatOpens))
+	{
+		OpenDoor(DeltaTime);
+	}
+}
 
+void UOpenDoor::OpenDoor(float DeltaTime)
+{
 	mCurrentYaw = GetOwner()->GetActorRotation().Yaw;
 	FRotator lDoorRotation = GetOwner()->GetActorRotation();
 
@@ -43,4 +57,3 @@ void UOpenDoor::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompon
 
 	GetOwner()->SetActorRotation(lDoorRotation);
 }
-
