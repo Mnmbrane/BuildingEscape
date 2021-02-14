@@ -37,6 +37,7 @@ void UGrabber::BeginPlay()
 	{
 		UE_LOG(LogTemp, Display, TEXT("%s has an InputComponent attached!"), *GetOwner()->GetName())
 		mInputComponent->BindAction("Grab", IE_Pressed, this, &UGrabber::Grab);
+		mInputComponent->BindAction("Grab", IE_Released, this, &UGrabber::Release);
 	}
 	else
 	{
@@ -47,6 +48,11 @@ void UGrabber::BeginPlay()
 void UGrabber::Grab()
 {
 	UE_LOG(LogTemp, Warning, TEXT("Grabber Pressed"))
+}
+
+void UGrabber::Release()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Grabber has been released"))
 }
 
 

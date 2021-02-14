@@ -27,6 +27,7 @@ protected:
 
 private:	
 	void Grab();
+	void Release();
 
 	float mReach;
 	UPhysicsHandleComponent* mPhysicsHandle;
