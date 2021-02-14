@@ -17,18 +17,19 @@ public:
 	// Sets default values for this component's properties
 	UOpenDoor();
 
+	// Called every frame
+	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
-
-public:	
-	// Called every frame
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 private:
 
 	void OpenDoor(float DeltaTime);
 	void CloseDoor(float DeltaTime);
+	float TotalMassOfActor() const;
+
 
 	float mInitialYaw;
 	float mCurrentYaw;
@@ -52,4 +53,7 @@ private:
 
 	UPROPERTY(EditAnywhere)
 	float mCloseDoorInterpSpeed = 60.f;
+
+	UPROPERTY(EditAnywhere)
+	float mMassToOpenDoor = 50.f;
 };
