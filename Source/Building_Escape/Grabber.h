@@ -40,8 +40,11 @@ private:
 	// Get Player position in the world
 	FVector GetPlayerWorldPos() const;
 
+	UPROPERTY()
+	UPhysicsHandleComponent* mPhysicsHandle;
+
+	UPROPERTY()
+	UInputComponent* mInputComponent;
 
 	float mReach;
-	UPhysicsHandleComponent* mPhysicsHandle;
-	UInputComponent* mInputComponent;
 };
