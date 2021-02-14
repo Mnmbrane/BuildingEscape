@@ -58,27 +58,33 @@ void UGrabber::Grab()
 
 	FHitResult lHitResult = GetFirstPhysicsBodyInReach();
 	UPrimitiveComponent* lComponentToGrab = lHitResult.GetComponent();
-	// Try and reach any actors with physics body collision channel set
+	AActor* lActorHit = lHitResult.GetActor();
 
 	// If we hit something then attach the physics handle
-	if(lHitResult.GetActor() != nullptr)
+	if(lActorHit != nullptr)
 	{
-		mPhysicsHandle->GrabComponentAtLocation(
-			lComponentToGrab,
-			NAME_None,
-			lLineTraceEnd
-		);
+		if(mPhysicsHandle != nullptr)
+		{
+			mPhysicsHandle->GrabComponentAtLocation(
+				lComponentToGrab,
+				NAME_None,
+				lLineTraceEnd
+			);
+		}
 	}
 }
 
 void UGrabber::Release()
 {
 
-	// If the physics handle is attached
-	if(mPhysicsHandle->GrabbedComponent != nullptr)
+	if(mPhysicsHandle != nullptr)
 	{
-		// Release the object we are holding
-		mPhysicsHandle->ReleaseComponent();
+		// If the physics handle is attached
+		if(mPhysicsHandle->GrabbedComponent != nullptr)
+		{
+			// Release the object we are holding
+			mPhysicsHandle->ReleaseComponent();
+		}
 	}
 }
 
@@ -89,11 +95,14 @@ void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 
 	FVector lLineTraceEnd = GetReachVector();
 
-	// If the physics handle is attached
-	if(mPhysicsHandle->GrabbedComponent != nullptr)
+	if(mPhysicsHandle != nullptr)
 	{
-		// Move the object we are holding
-		mPhysicsHandle->SetTargetLocation(lLineTraceEnd);
+		// If the physics handle is attached
+		if(mPhysicsHandle->GrabbedComponent != nullptr)
+		{
+			// Move the object we are holding
+			mPhysicsHandle->SetTargetLocation(lLineTraceEnd);
+		}
 	}
 }
 
