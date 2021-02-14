@@ -46,9 +46,6 @@ private:
 	ATriggerVolume* mPressurePlate;
 
 	UPROPERTY(EditAnywhere)
-	AActor* mActorThatOpens;
-
-	UPROPERTY(EditAnywhere)
 	float mOpenDoorInterpSpeed = 60.f;
 
 	UPROPERTY(EditAnywhere)
