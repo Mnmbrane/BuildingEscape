@@ -8,7 +8,8 @@
 // Sets default values for this component's properties
 UGrabber::UGrabber() :
 	mReach(100.f),
-	mPhysicsHandle(nullptr)
+	mPhysicsHandle(nullptr),
+	mInputComponent(nullptr)
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
@@ -25,15 +26,27 @@ void UGrabber::BeginPlay()
 	
 	// Check Physics handle component
 	mPhysicsHandle = GetOwner()->FindComponentByClass<UPhysicsHandleComponent>();
-
 	if(mPhysicsHandle == nullptr)
 	{
 		UE_LOG(LogTemp, Error, TEXT("%s does not have a PhysicsHandle attached!"), *GetOwner()->GetName())
 	}
+
+	// Check Input component
+	mInputComponent = GetOwner()->FindComponentByClass<UInputComponent>();
+	if(mInputComponent != nullptr)
+	{
+		UE_LOG(LogTemp, Display, TEXT("%s has an InputComponent attached!"), *GetOwner()->GetName())
+		mInputComponent->BindAction("Grab", IE_Pressed, this, &UGrabber::Grab);
+	}
 	else
 	{
-		// Physics Handle found
+		UE_LOG(LogTemp, Error, TEXT("%s does not have an InputComponent attached!"), *GetOwner()->GetName())
 	}
+}
+
+void UGrabber::Grab()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Grabber Pressed"))
 }
 
 
