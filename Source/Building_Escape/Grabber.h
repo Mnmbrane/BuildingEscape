@@ -28,6 +28,12 @@ protected:
 private:	
 	void Grab();
 	void Release();
+	void FindPhysicsHandleComponent();
+	void FindAndSetupInputComponent();
+
+	// Return the first Actor within reach with physics body
+	FHitResult GetFirstPhysicsBodyInReach() const;
+
 
 	float mReach;
 	UPhysicsHandleComponent* mPhysicsHandle;
